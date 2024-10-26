@@ -1,0 +1,145 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* remove the gap so it doesn't close */
+}
+header {
+    background-color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+.header-backgroud{
+    background-color: #d82c04;
+    font-size: 25px;
+}
+.header .logo img {
+    width: 100px;
+}
+.header .info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.header .cart {
+    color: rgb(20, 4, 4);
+    border-radius: 20px;
+    padding: 10px 20px;
+    width: 150px; ;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+#home {
+    text-align: center;
+    padding: 50px 20px;
+    background: url('banner.jpg') no-repeat center center/cover;
+    background: url('tronvibanh.png') no-repeat center center/cover;
+    color: rgb(10, 4, 4);
+}
+
+section {
+    padding: 20px;
+}
+
+#products .product {
+    display: inline-block;
+    width: 45%;
+    margin: 20px 2.5%;
+    text-align: center;
+}
+
+#products .product img {
+    width: 100%;
+    height: auto;
+}
+
+footer {
+    background-color: #d82c04;
+    padding: 20px;
+    text-align: center;
+            color: white;
+            padding: 40px 0;
+        }
+        .footer h5 {
+            color: white;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .form-control, .btn {
+            border-radius: 20px;
+}
+
+.nut{
+    border: 3px solid#106c74;
+    background-color: white;
+    color: #080102;
+}
+
+.nut:hover{
+    background-color: #106c74;
+    color: white;
+    cursor: pointer;
+}
+.video-container{
+    text-align:center;
+    width:100%;
+    
+}
+.image-container {
+    position: relative; /* Đặt ảnh làm phần tử tham chiếu */
+    width: 100%;
+    max-width: 10000px; /* Đặt kích thước tối đa của hình ảnh */
+    }
+
+    .image-container img {
+        width: 100%; /* Hình ảnh sẽ tự động điều chỉnh kích thước */
+        height: 300px;
+    }
+
+    .text-overlay {
+        position: absolute; /* Chữ sẽ đè lên phần tử ảnh */
+        top: 50%; /* Canh chỉnh chữ ở giữa theo chiều dọc */
+        left: 50%; /* Canh chỉnh chữ ở giữa theo chiều ngang */
+        transform: translate(-50%, -50%); /* Điều chỉnh để chữ nằm giữa chính xác */
+        color: white; /* Màu chữ trắng */
+        font-size: 24px; /* Kích thước chữ */
+        font-weight: bold; /* Chữ in đậm */
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.5); /* Nền đen mờ để chữ dễ đọc */
+        padding: 10px; /* Khoảng cách giữa chữ và nền */
+        border-radius: 8px; /* Bo tròn góc của nền */
+    }
+.content {
+    margin-left: 150px;
+    text-align: left;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
