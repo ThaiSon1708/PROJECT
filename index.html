@@ -12,11 +12,12 @@
 </head>
 <body>
     <header>
+      <nav class="navbar">
         <header class="header">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-2 logo">
-                    <img src="Media/logo.jpg" width="100px" height="100px">
+                  <a href="index.html"><img src="Media/logo.jpg" width="100px" height="100px" ></a> 
                 </div>
                 <div class="col-md-3 info-item">
                     <img src="Media/icon_header_1.png" alt="Phone" width="50"height="50"  >
@@ -41,33 +42,34 @@
                 </div>
                 <div class="col-md-1 text-end">
                     <div class="cart">
-                        <p><i class="fa-solid fa-cart-shopping"></i> GIỎ HÀNG / 0 đ</p>
+                      <a href="giohang.html">  <p><i class="fa-solid fa-cart-shopping"></i> GIỎ HÀNG / 0 đ</p></a>
                     </div>
                 </div>
             </div>
         </div>
+        </nav>
     <ul class="nav nav-pills" style="background-color: red;">
       <li class="nav-item">
-        <a class="nav-link" href="index.html" style="color:white;">Trang chủ</a>
+        <a class="nav-link" href="index.html" style="color:white; ">Trang chủ</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="gioithieu.html" style="color:white;">Giới thiệu</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="card.html" style="color:white;">Sản phẩm</a>
-      </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="card.html" style="color:white;"> Sản phẩm</a>
+        <a class="nav-link dropdown-toggle" href="card.html" data-bs-toggle="dropdown" style="color:white;">Sản phẩm</a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Hộp Trăng Vàng</a></li>
-          <li><a class="dropdown-item" href="#">Hộp Combo Gợi Ý</a></li>
-          <li><a class="dropdown-item" href="#">Hộp Thu Tuyết</a></li>
-          <li><a class="dropdown-item" href="#">Thu Như Ý</a></li>
-          <li><a class="dropdown-item" href="#">Hộp Lava Trứng Chảy </a></li>
+            <li><a class="dropdown-item" href="card.html">Hộp Trăng Vàng</a></li>
+            <li><a class="dropdown-item" href="card.html">Hộp Combo Gợi Ý</a></li>
+            <li><a class="dropdown-item" href="card.html">Hộp Thu Tuyết</a></li>
+            <li><a class="dropdown-item" href="card.html">Thu Như Ý</a></li>
+            <li><a class="dropdown-item" href="card.html">Hộp Lava Trứng Chảy</a></li>
         </ul>
-      </li>
+    </li>
       <li class="nav-item">
         <a class="nav-link" href="lienhe.html" style="color:white;">Liên hệ</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="dangnhap.html" style="color:white;">Đăng nhập</a>
       </li>
     </ul>  
     <section id="home">
@@ -86,6 +88,63 @@
     <div class="video-container">
     <iframe width="1051" height="612" src="https://www.youtube.com/embed/tz46IkM2JZc?si=jVuchEwTB1Y0q8Ak" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         <style>
+          body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+header {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #f2ebeb;
+    padding: 10px 0;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.navbar ul li {
+    display: inline;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    padding: 14px 20px;
+    display: block;
+}
+
+.navbar ul li a:hover {
+    background-color: #f6eeee;
+}
+
+.navbar ul li input[type="text"] {
+    padding: 5px;
+}
+
+.navbar ul li button {
+    padding: 5px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.navbar ul li button:hover {
+    background-color: #e0e0e0;
+}
+
+.content {
+    padding: 20px;
+}
+
             .item-box {
               position: relative;
               width: 100%;
@@ -314,9 +373,9 @@
             </div>
             <div class="row mt-3">
                 <div class="col-md-6">
-                    <a href="#"><img src="Media/facebook.svg" alt="Facebook" class="img-fluid" width="30"></a>
-                    <a href="#"><img src="Media/instagram.svg" alt="Instagram" class="img-fluid" width="30"></a>                    
-                    <a href="#"><img src="Media/email.svg" alt="Email" class="img-fluid" width="30"></a>                    
+                    <a href="https://www.facebook.com/son.phamthai.5473"><img src="Media/facebook.svg" alt="Facebook" class="img-fluid" width="30"></a>
+                    <a href="https://www.instagram.com/th.son_17/"><img src="Media/instagram.svg" alt="Instagram" class="img-fluid" width="30"></a>                    
+                    <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox"><img src="Media/email.svg" alt="Email" class="img-fluid" width="30"></a>                    
                 </div>
             </div>
         </div>
