@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ - Kinh Đô Bánh Trung Thu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #fffbe6 0%, #fff 100%);
+        }
+        .header {
+            background: #fff;
+            border-bottom: 2px solid #FFD700;
+            padding: 16px 0 8px 0;
+        }
+        .logo img {
+            border-radius: 16px;
+            border: 3px solid #FFD700;
+            background: #fff;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .info-item img {
+            border-radius: 50%;
+            border: 2px solid #FFD700;
+            background: #fff;
+        }
+        .cart {
+            font-size: 1.1em;
+            color: #C1272D;
+            font-weight: bold;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #C1272D 0%, #FFD700 100%);
+            box-shadow: 0 2px 8px #FFD70033;
+        }
+        .navbar .nav-link, .navbar .dropdown-toggle {
+            color: #fff !important;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+        .navbar .nav-link:hover, .navbar .dropdown-toggle:hover {
+            color: #FFD700 !important;
+            background: #fffbe6;
+        }
+        .navbar .dropdown-menu {
+            background: #fffbe6;
+            border-radius: 12px;
+            min-width: 220px;
+            box-shadow: 0 4px 16px #FFD70033;
+        }
+        .navbar .dropdown-item:hover {
+            background: #FFD700;
+            color: #C1272D;
+        }
+        .navbar .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+        .contact-section {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px #FFD70022;
+            padding: 40px 32px;
+            margin: 40px auto;
+            max-width: 1000px;
+        }
+        .contact-section h1, .contact-section h2 {
+            color: #C1272D;
+            font-weight: bold;
+        }
+        .contact-info {
+            margin-bottom: 32px;
+        }
+        .contact-info p, .contact-info a {
+            font-size: 1.1em;
+            color: #b30000;
+        }
+        .map-responsive {
+            overflow: hidden;
+            padding-bottom: 56.25%;
+            position: relative;
+            height: 0;
+            margin-bottom: 32px;
+            border-radius: 18px;
+            box-shadow: 0 2px 12px #FFD70033;
+        }
+        .map-responsive iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            border-radius: 18px;
+        }
+        .faq-container {
+            width: 100%;
+            margin: 40px 0 0 0;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 0 10px #FFD70022;
+        }
+        .faq-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #C1272D;
+        }
+        .faq-item {
+            margin-bottom: 10px;
+        }
+        .faq-item label {
+            display: block;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+        .faq-item label:hover {
+            background-color: #ffe5b4;
+        }
+        .faq-item input[type="checkbox"] {
+            display: none;
+        }
+        .faq-item input[type="checkbox"]:checked ~ .faq-answer {
+            max-height: 1000px;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: #fffbe6;
+        }
+        .footer {
+            background: linear-gradient(90deg, #FFD700 0%, #C1272D 100%);
+            color: #fff;
+            padding: 32px 0 0 0;
+            margin-top: 40px;
+        }
+        .footer h5 {
+            color: #fff;
+            font-weight: bold;
+        }
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: #FFD700;
+        }
+        @media (max-width: 991px) {
+            .contact-section {
+                padding: 24px 8px;
+            }
+        }
+        @media (max-width: 767px) {
+            .header .row {
+                flex-direction: column;
+                text-align: center;
+            }
+            .contact-section {
+                padding: 12px 2px;
+            }
+            .map-responsive {
+                padding-bottom: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-2 logo">
+                        <a href="trangchu.php"><img src="Media/logo.jpg" width="90" height="90"></a>
+                    </div>
+                    <div class="col-md-3 info-item">
+                        <img src="Media/icon_header_1.png" alt="Phone" width="40" height="40">
+                        <div>
+                            <p class="mb-0">Hotline mua hàng:</p>
+                            <p class="mb-0 fw-bold">0919 838 786</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 info-item">
+                        <img src="Media/icon_header_2.png" alt="Delivery" width="40" height="40">
+                        <div>
+                            <p class="mb-0">Giao hàng tận nơi:</p>
+                            <p class="mb-0 fw-bold">Vận chuyển toàn quốc</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 info-item">
+                        <img src="Media/icon_header_3.png" alt="Clock" width="40" height="40">
+                        <div>
+                            <p class="mb-0">Giờ làm việc: 07h00 - 18h00</p>
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        <div class="cart">
+                            <i class="fa-solid fa-cart-shopping"></i> GIỎ HÀNG / 0 đ
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="trangchu.php">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gioithieu.php">Giới thiệu</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="card.php" id="dropdownSanPham" role="button">
+                            Sản phẩm
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownSanPham">
+                            <li><a class="dropdown-item" href="card.php">Hộp Trăng Vàng</a></li>
+                            <li><a class="dropdown-item" href="cardcombo.html">Hộp Combo Gợi Ý</a></li>
+                            <li><a class="dropdown-item" href="cardtt.html">Hộp Thu Tuyết</a></li>
+                            <li><a class="dropdown-item" href="cardny.html">Thu Như Ý</a></li>
+                            <li><a class="dropdown-item" href="cardLV.html">Hộp Lava Trứng Chảy</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="lienhe.html" style="color:#FFD700;">Liên hệ</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Liên hệ & Bản đồ -->
+    <div class="contact-section">
+        <h1 class="mb-4 text-center">Liên hệ với Kinh Đô</h1>
+        <div class="row">
+            <div class="col-md-6 contact-info">
+                <h2>Thông tin liên hệ</h2>
+                <p><strong>NHÀ PHÂN PHỐI BÁNH KINH ĐÔ</strong></p>
+                <p>Địa Chỉ: 116/46 Bình Lợi, Phường 13, Quận Bình Thạnh, TP.HCM</p>
+                <p>Hotline 1: 0919 838 786 – Zalo</p>
+                <p>Hotline 2: 0908 003 880 – Zalo</p>
+                <p>Email: banhkinhdo.net@gmail.com</p>
+                <p>Website: <a href="http://www.banhkinhdo.vn" target="_blank">www.banhkinhdo.vn</a></p>
+                <form class="mt-4">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Họ tên của bạn" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Email của bạn" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" rows="3" placeholder="Nội dung liên hệ" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Gửi liên hệ</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="map-responsive">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119189.57292302648!2d105.71320622670535!3d21.005694899999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135adf2d75f49bd%3A0x98b94920f483821b!2zQsOhbmggVHJ1bmcgVGh1IEtpbmggxJDDtA!5e0!3m2!1svi!2s!4v1730519729864!5m2!1svi!2s" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+        <!-- FAQ -->
+        <div class="faq-container mt-5">
+            <h2>Vui lòng đọc FAQ của chúng tôi trước khi gửi cho chúng tôi một tin nhắn.</h2>
+            <div class="faq-item">
+                <input type="checkbox" id="question1">
+                <label for="question1">Phí giao hàng cho các đơn đặt hàng từ Cửa hàng trực tuyến là gì?</label>
+                <div class="faq-answer">
+                    <p>Phí giao hàng sẽ được tính theo khu vực và tổng giá trị đơn hàng. Đơn hàng lớn có thể được miễn phí vận chuyển.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <input type="checkbox" id="question2">
+                <label for="question2">Những phương thức thanh toán nào được chấp nhận trong Cửa hàng trực tuyến?</label>
+                <div class="faq-answer">
+                    <p>Chúng tôi chấp nhận thanh toán qua chuyển khoản ngân hàng, ví điện tử và tiền mặt khi nhận hàng.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <input type="checkbox" id="question3">
+                <label for="question3">Giao hàng sẽ mất bao lâu?</label>
+                <div class="faq-answer">
+                    <p>Thời gian giao hàng thường từ 1-3 ngày làm việc tùy khu vực.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <input type="checkbox" id="question4">
+                <label for="question4">Làm thế nào an toàn là mua sắm trong Cửa hàng trực tuyến? Dữ liệu của tôi có được bảo vệ không?</label>
+                <div class="faq-answer">
+                    <p>Chúng tôi cam kết bảo mật thông tin khách hàng và sử dụng các biện pháp bảo vệ dữ liệu hiện đại.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <input type="checkbox" id="question5">
+                <label for="question5">Điều gì chính xác xảy ra sau khi đặt hàng?</label>
+                <div class="faq-answer">
+                    <p>Bạn sẽ nhận được xác nhận đơn hàng qua email và chúng tôi sẽ liên hệ để xác nhận giao hàng.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <input type="checkbox" id="question6">
+                <label for="question6">Tôi có nhận được hóa đơn cho đơn hàng của mình không?</label>
+                <div class="faq-answer">
+                    <p>Bạn sẽ nhận được hóa đơn điện tử qua email hoặc bản in kèm theo đơn hàng.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- ĐỊA CHỈ -->
+                <div class="col-md-4 mb-4">
+                    <h5>ĐỊA CHỈ</h5>
+                    <p>NHÀ PHÂN PHỐI BÁNH KINH ĐÔ</p>
+                    <p>Địa Chỉ: 116/46 Bình Lợi, Phường 13, Quận Bình Thạnh, TP.HCM</p>
+                    <p>Hotline 1: 0919 838 786 - Zalo</p>
+                    <p>Hotline 2: 0908 003 880 - Zalo</p>
+                    <p>Email: banhkinhdo.net@gmail.com</p>
+                    <p>Website: www.banhkinhdo.vn</p>
+                </div>
+                <!-- LIÊN KẾT NHANH -->
+                <div class="col-md-4 mb-4">
+                    <h5>LIÊN KẾT NHANH</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Giới thiệu Kinh Đô</a></li>
+                        <li><a href="#">Phương thức thanh toán</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Chính sách đổi trả</a></li>
+                        <li><a href="#">Phương thức vận chuyển</a></li>
+                        <li><a href="#">Hướng dẫn đặt hàng</a></li>
+                        <li><a href="#">Blog chia sẻ</a></li>
+                    </ul>
+                </div>
+                <!-- LIÊN HỆ -->
+                <div class="col-md-4 mb-4">
+                    <h5>LIÊN HỆ</h5>
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Your Name (required)">
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email (required)">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="3" placeholder="Your Message (required)"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">SUBMIT</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <a href="#"><img src="Media/facebook.svg" alt="Facebook" class="img-fluid" width="30"></a>
+                    <a href="#"><img src="Media/instagram.svg" alt="Instagram" class="img-fluid" width="30"></a>
+                    <a href="#"><img src="Media/email.svg" alt="Email" class="img-fluid" width="30"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
