@@ -38,4 +38,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 }
+
+if (isset($_GET['id_san_pham'])) {
+    $id_san_pham = $_GET['id_san_pham'];
+    $ten = "Sản phẩm " . $id_san_pham;
+    $gia = 1000;
+    $hinhanh = "image.png";
+    $soluong = 1;
+
+    $_SESSION['cart'][$id_san_pham] = [
+        'id' => $id_san_pham,
+        'ten' => $ten,
+        'gia' => $gia,
+        'hinhanh' => $hinhanh,
+        'soluong' => $soluong
+    ];
+
+    header("Location: cart.php");
+    exit();
+}
 ?>

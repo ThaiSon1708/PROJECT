@@ -1,35 +1,37 @@
 <?php
-// nếu như người dùng bấm vào nút submit 
-include("../Model/taikhoan.php");
-if(isset($_POST['txtsub'])){
-    if(empty($_POST['txtname']) || empty($_POST['txtmail']) || empty($_POST['txtpass']) || empty($_POST['txtconfirm'])){
-        echo"<script>alert('Vui lòng nhập đầy đủ thông tin!');
-            window.location.href = '../View/dangky.php'; 
-            </script>";
-    }
-    else{
-        // kiểm tra đã tồn tại user name chưa
-        $model = new taikhoan();
-        $sl_acc = $model->select_taikhoan($_POST['txtname']);
+session_start();
+include_once("../Model/taikhoan.php");
 
-        if($sl_acc->num_rows > 0){
-            echo"<script>alert('Tài khoản đã tồn tại!');
-            window.location.href = '../View/dangky.php'; 
-            </script>";
-        }
-        else{
-            if($_POST['txtpass'] == $_POST['txtconfirm']){
-                $model = new taikhoan();
-                $insert = $model->insert_taikhoan($_POST['txtname'], $_POST['txtmail'],$_POST['txtpass']);
-                echo"<script>alert('Thành công!');
-                window.location.href = '../View/dangnhap.php'; 
-                </script>";
-            }
-        }
-    }
-
+// SỬA LỖI: Đổi tên biến cho rõ ràng
+if (isset($_POST['txtname']) && isset($_POST['txtpass']) && isset($_POST['txtemail']) && isset($_POST['txtsdt'])) {
     
+    // Lấy dữ liệu từ form (Bỏ 'txthoten')
+    $name = $_POST['txtname']; // Đây là cột 'name' (Tên đăng nhập)
+    $pass = $_POST['txtpass'];
+    $email = $_POST['txtemail'];
+    $sdt = $_POST['txtsdt'];
+
+    // Kiểm tra xem các trường có rỗng không
+    if (empty($name) || empty($pass) || empty($email) || empty($sdt)) {
+        echo "<script>alert('Vui lòng nhập đầy đủ thông tin!'); window.location.href = '../View/dangky.php';</script>";
+        exit();
+    }
+
+    $model = new taikhoan();
+    
+    // SỬA LỖI: Gọi hàm insert_taikhoan với 4 tham số (bỏ 'hoten')
+    $result = $model->insert_taikhoan($name, $pass, $email, $sdt);
+
+    if ($result) {
+        // Đăng ký thành công, chuyển đến trang đăng nhập
+        echo "<script>alert('Đăng ký thành công! Vui lòng đăng nhập.'); window.location.href = '../View/dangnhap.php';</script>";
+    } else {
+        // Có thể lỗi do trùng 'name' hoặc 'email' (nếu bạn có cài đặt UNIQUE)
+        echo "<script>alert('Đăng ký thất bại! Tên đăng nhập hoặc Email có thể đã tồn tại.'); window.location.href = '../View/dangky.php';</script>";
+    }
+
+} else {
+    // Nếu ai đó truy cập file này trực tiếp
+    header("Location: ../View/dangky.php");
 }
-
-
 ?>

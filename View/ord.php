@@ -1,14 +1,24 @@
 <?php
 session_start();
 
-// Chỉ xử lý đặt hàng khi khách bấm nút Đặt hàng trên trang này
+// 1. KHỞI TẠO BIẾN & TÍNH TỔNG
 $order_success = false;
 $customer = [];
-if (isset($_POST['order']) && !empty($_SESSION['cart'])) {
-    $order_success = true;
-    $show_cart = $_SESSION['cart'];
-    // Lưu thông tin khách hàng để hiển thị lại
-    $customer = [
+$total = 0;
+$show_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+
+// Tính tổng tiền giỏ hàng để hiển thị
+foreach ($show_cart as $item) {
+    // Đảm bảo các key tồn tại để tránh lỗi
+    $total += ($item['gia'] ?? 0) * ($item['quantity'] ?? 0);
+}
+
+// 2. XỬ LÝ ĐẶT HÀNG (Lưu thông tin vào Session và chuyển hướng)
+if (isset($_POST['order']) && !empty($show_cart)) {
+    // ⚠️ LƯU Ý: NÊN THÊM LOGIC LƯU VÀO DATABASE TẠI ĐÂY NẾU CẦN
+
+    // Lưu thông tin khách hàng và giỏ hàng vào SESSION để dùng cho trang thông báo
+    $_SESSION['customer_info'] = [
         'name'    => $_POST['name'] ?? '',
         'address' => $_POST['address'] ?? '',
         'city'    => $_POST['city'] ?? '',
@@ -16,10 +26,25 @@ if (isset($_POST['order']) && !empty($_SESSION['cart'])) {
         'phone'   => $_POST['phone'] ?? '',
         'email'   => $_POST['email'] ?? '',
         'notes'   => $_POST['notes'] ?? '',
+        'total'   => $total,
+        'cart'    => $show_cart,
     ];
-    unset($_SESSION['cart']);
-} else {
-    $show_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+    
+    // Xóa giỏ hàng cũ để tránh đặt hàng lặp lại
+    unset($_SESSION['cart']); 
+    
+    // Chuyển hướng sang trang thông báo thành công
+    header('Location: thanhtoan.php?status=success'); 
+    exit;
+}
+
+// 3. XỬ LÝ HIỂN THỊ THÔNG BÁO SAU KHI CHUYỂN HƯỚNG
+if (isset($_GET['status']) && $_GET['status'] == 'success') {
+    $order_success = true;
+    // Lấy thông tin đã lưu từ Session để hiển thị
+    $customer = $_SESSION['customer_info'] ?? [];
+    $show_cart = $customer['cart'] ?? [];
+    $total = $customer['total'] ?? 0;
 }
 ?>
 <!DOCTYPE html>
@@ -32,6 +57,7 @@ if (isset($_POST['order']) && !empty($_SESSION['cart'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        /* TOÀN BỘ CSS CỦA BẠN */
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #fffbe6 0%, #fff 100%);
@@ -230,6 +256,15 @@ if (isset($_POST['order']) && !empty($_SESSION['cart'])) {
         .footer a:hover {
             color: #FFD700;
         }
+        .success-message {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(193,39,45,0.15), 0 1.5px 8px 0 #FFD700;
+        }
+        .success-message h2 {
+            color: #C1272D;
+        }
+        /* Media Queries */
         @media (max-width: 991px) {
             .container {
                 width: 98%;
@@ -283,7 +318,6 @@ if (isset($_POST['order']) && !empty($_SESSION['cart'])) {
                 </div>
             </div>
         </div>
-        <!-- Navbar -->
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -312,96 +346,113 @@ if (isset($_POST['order']) && !empty($_SESSION['cart'])) {
             <li>Thanh toán</li>
         </ul>
 
-        <h2 class="text-center mb-4" style="color:#b30000;">Thông tin khách hàng</h2>
-
-        <div class="row">
-            <div class="col-md-7">
-                <div class="form-section bg-white p-4 rounded shadow-sm mb-4">
-                    <form method="post" action="thanhtoan.php">
-                        <div class="form-group mb-3">
-                            <label for="name" class="form-label">Họ & Tên *</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="address" class="form-label">Địa chỉ *</label>
-                            <input type="text" class="form-control" id="address" name="address" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="city" class="form-label">Tỉnh / Thành phố *</label>
-                            <input type="text" class="form-control" id="city" name="city" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="country" class="form-label">Quốc gia *</label>
-                            <select class="form-select" id="country" name="country" required>
-                                <option value="Việt Nam">Việt Nam</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="phone" class="form-label">Số điện thoại *</label>
-                            <input type="tel" class="form-control" id="phone" name="phone" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="email" class="form-label">Địa chỉ email (tùy chọn)</label>
-                            <input type="email" class="form-control" id="email" name="email">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="notes" class="form-label">Ghi chú đơn hàng (tùy chọn)</label>
-                            <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
-                        </div>
-                        <button type="submit" name="order" class="btn btn-danger w-100 fw-bold">Đặt hàng</button>
-                    </form>
+        <?php if (!$order_success): ?>
+            <h2 class="text-center mb-4" style="color:#b30000;">Thông tin khách hàng</h2>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form-section bg-white p-4 rounded shadow-sm mb-4">
+                        <form method="post" action="thanhtoan.php">
+                            <div class="form-group mb-3">
+                                <label for="name" class="form-label">Họ & Tên *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="address" class="form-label">Địa chỉ *</label>
+                                <input type="text" class="form-control" id="address" name="address" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="city" class="form-label">Tỉnh / Thành phố *</label>
+                                <input type="text" class="form-control" id="city" name="city" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="country" class="form-label">Quốc gia *</label>
+                                <select class="form-select" id="country" name="country" required>
+                                    <option value="Việt Nam">Việt Nam</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="phone" class="form-label">Số điện thoại *</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="email" class="form-label">Địa chỉ email (tùy chọn)</label>
+                                <input type="email" class="form-control" id="email" name="email">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="notes" class="form-label">Ghi chú đơn hàng (tùy chọn)</label>
+                                <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                            </div>
+                            <button type="submit" name="order" class="btn btn-danger w-100 fw-bold">ĐẶT HÀNG</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="order-summary bg-white p-4 rounded shadow-sm">
+                        <h3>Đơn hàng của bạn</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>SL</th>
+                                    <th>Tạm tính</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $total = 0; 
+                            if (!empty($show_cart)):
+                                foreach ($show_cart as $item):
+                                    $quantity = $item['quantity'] ?? 0;
+                                    $price = $item['gia'] ?? 0;
+                                    $subtotal = $price * $quantity;
+                                    $total += $subtotal;
+                            ?>
+                                <tr>
+                                    <td>
+                                        <img src="../Upload/<?= htmlspecialchars($item['hinhanh']) ?>" width="50" style="border-radius:6px; border:1px solid #ffb366;">
+                                        <?= htmlspecialchars($item['ten']) ?>
+                                    </td>
+                                    <td><?= $quantity ?></td>
+                                    <td style="color:#b30000;"><?= number_format($subtotal, 0, ',', '.') ?> đ</td>
+                                </tr>
+                            <?php
+                                endforeach;
+                            endif;
+                            ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="2" class="text-end">Tổng cộng:</th>
+                                    <th style="color:#b30000;"><?= number_format($total, 0, ',', '.') ?> đ</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <p class="note mt-2">
+                            Dữ liệu cá nhân của bạn sẽ được sử dụng để xử lý đơn đặt hàng, hỗ trợ trải nghiệm của bạn trên toàn bộ trang web này và cho các mục đích khác được mô tả trong chính sách riêng tư.
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-5">
-                <div class="order-summary bg-white p-4 rounded shadow-sm">
-                    <h3>Đơn hàng của bạn</h3>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Sản phẩm</th>
-                                <th>SL</th>
-                                <th>Tạm tính</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        $total = 0;
-                        if (!empty($show_cart)):
-                            foreach ($show_cart as $item):
-                                $subtotal = $item['gia'] * $item['quantity'];
-                                $total += $subtotal;
-                        ?>
-                            <tr>
-                                <td>
-                                    <img src="../Upload/<?= htmlspecialchars($item['hinhanh']) ?>" width="50" style="border-radius:6px; border:1px solid #ffb366;">
-                                    <?= htmlspecialchars($item['ten']) ?>
-                                </td>
-                                <td><?= $item['quantity'] ?></td>
-                                <td style="color:#b30000;"><?= number_format($subtotal, 0, ',', '.') ?> đ</td>
-                            </tr>
-                        <?php
-                            endforeach;
-                        endif;
-                        ?>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th colspan="2" class="text-end">Tổng cộng:</th>
-                                <th style="color:#b30000;"><?= number_format($total, 0, ',', '.') ?> đ</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <p class="note mt-2">
-                        Dữ liệu cá nhân của bạn sẽ được sử dụng để xử lý đơn đặt hàng, hỗ trợ trải nghiệm của bạn trên toàn bộ trang web này và cho các mục đích khác được mô tả trong chính sách riêng tư.
-                    </p>
+        <?php else: ?>
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-8">
+                    <div class="card p-5 text-center success-message">
+                        <i class="fas fa-check-circle fa-4x mb-3" style="color:#C1272D;"></i>
+                        <h2 class="mb-3">Đặt hàng thành công!</h2>
+                        <p class="lead">🎉 Cảm ơn **<?= htmlspecialchars($customer['name'] ?? 'Quý khách') ?>** đã đặt hàng!</p>
+                        <p>Đơn hàng của bạn trị giá **<?= number_format($total, 0, ',', '.') ?> đ** đã được ghi nhận.</p>
+                        <p>Chúng tôi sẽ liên hệ qua **<?= htmlspecialchars($customer['phone'] ?? '') ?>** để xác nhận đơn hàng tại địa chỉ: **<?= htmlspecialchars($customer['address'] ?? '') ?>**.</p>
+                        <a href="trangchu.php" class="btn btn-primary mt-3" style="background:#C1272D; border:none; border-radius:30px;">
+                            <i class="fas fa-home"></i> Tiếp tục mua sắm
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <!-- ĐỊA CHỈ -->
                 <div class="col-md-4">
                     <h5>ĐỊA CHỈ</h5>
                     <p>NHÀ PHÂN PHỐI BÁNH KINH ĐÔ</p>
@@ -411,7 +462,6 @@ if (isset($_POST['order']) && !empty($_SESSION['cart'])) {
                     <p>Email: banhkinhdo.net@gmail.com</p>
                     <p>Website: www.banhkinhdo.vn</p>
                 </div>
-                <!-- LIÊN KẾT NHANH -->
                 <div class="col-md-4">
                     <h5>LIÊN KẾT NHANH</h5>
                     <ul class="list-unstyled">
@@ -424,7 +474,6 @@ if (isset($_POST['order']) && !empty($_SESSION['cart'])) {
                         <li><a href="#">Blog chia sẻ</a></li>
                     </ul>
                 </div>
-                <!-- LIÊN HỆ -->
                 <div class="col-md-4">
                     <h5>LIÊN HỆ</h5>
                     <form>
@@ -444,11 +493,12 @@ if (isset($_POST['order']) && !empty($_SESSION['cart'])) {
             <div class="row mt-3">
                 <div class="col-md-6">
                     <a href="https://www.facebook.com/son.phamthai.5473"><img src="Media/facebook.svg" alt="Facebook" class="img-fluid" width="30"></a>
-                    <a href="https://www.instagram.com/th.son_17/"><img src="Media/instagram.svg" alt="Instagram" class="img-fluid" width="30"></a>                    
-                    <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox"><img src="Media/email.svg" alt="Email" class="img-fluid" width="30"></a>                    
+                    <a href="https://www.instagram.com/th.son_17/"><img src="Media/instagram.svg" alt="Instagram" class="img-fluid" width="30"></a>      
+                    <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox"><img src="Media/email.svg" alt="Email" class="img-fluid" width="30"></a>        
                 </div>
             </div>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

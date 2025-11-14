@@ -7,17 +7,47 @@ class Product {
         $this->conn->set_charset("utf8");
     }
 
+    // Lấy tất cả sản phẩm đang hiển thị (trangthai = 1)
     public function getAll() {
-        $result = $this->conn->query("SELECT * FROM sanpham WHERE trangthai=1");
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $sql = "SELECT * FROM sanpham WHERE trangthai = 1 ORDER BY id DESC";
+        $res = $this->conn->query($sql);
+        return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+    // Lấy sản phẩm đã xóa/ẩn (trangthai = 0)
+    public function getDeleted() {
+        $sql = "SELECT * FROM sanpham WHERE trangthai = 0 ORDER BY id DESC";
+        $res = $this->conn->query($sql);
+        return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+    // Xóa tạm (soft delete) — đặt trangthai = 0
+    public function softDelete($id) {
+        $stmt = $this->conn->prepare("UPDATE sanpham SET trangthai = 0 WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
+    // Khôi phục sản phẩm (trangthai = 1)
+    public function restore($id) {
+        $stmt = $this->conn->prepare("UPDATE sanpham SET trangthai = 1 WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
+    // (Tuỳ chọn) Xóa vĩnh viễn nếu cần
+    public function deletePermanent($id) {
+        $stmt = $this->conn->prepare("DELETE FROM sanpham WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
     }
 
     public function getById($id) {
-    $stmt = $this->conn->prepare("SELECT * FROM sanpham WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    return $stmt->get_result()->fetch_assoc();
-}
+        $stmt = $this->conn->prepare("SELECT * FROM sanpham WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
 
     public function add($ten, $gia, $hinhanh, $mota) {
         $stmt = $this->conn->prepare("INSERT INTO sanpham (ten, gia, hinhanh, mota) VALUES (?, ?, ?, ?)");
@@ -51,21 +81,6 @@ class Product {
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
-
-    public function getDeleted() {
-        $result = $this->conn->query("SELECT * FROM sanpham WHERE trangthai=0");
-        $arr = [];
-        while ($row = $result->fetch_assoc()) {
-            $arr[] = $row;
-        }
-        return $arr;
-    }
-
-    public function restore($id) {
-    $stmt = $this->conn->prepare("UPDATE sanpham SET trangthai=1 WHERE id=?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-}
 }
 ?>
 
