@@ -68,6 +68,12 @@
             text-align: center;
             margin: 40px 0 30px 0;
         }
+        .video-container iframe {
+  max-width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px #FFD70033;
+  margin-bottom: 20px; /* Thêm khoảng cách giữa 2 video */
+}
         .about-section {
             background: #fff;
             border-radius: 24px;

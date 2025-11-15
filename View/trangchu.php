@@ -68,15 +68,18 @@ session_start();
             box-shadow: 0 4px 24px #FFD70033;
         }
         .text-overlay {
-            position: absolute;
-            top: 30%;
-            left: 10%;
+            position: relative; /* đổi từ absolute → relative */
+            margin-top: 20px;   /* thêm khoảng cách dưới banner */
+            left: 0;            /* reset lại */
+            top: 0;             /* reset lại */
             color: #C1272D;
             background: rgba(255,255,255,0.85);
             padding: 32px 48px;
             border-radius: 24px;
             box-shadow: 0 2px 12px #FFD70033;
-            max-width: 500px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .text-overlay h1 {
             font-size: 2.2em;
@@ -138,6 +141,12 @@ session_start();
         .video-container {
             text-align: center;
             margin: 40px 0;
+        }
+        .video-container iframe {
+            max-width: 800px;
+            width: 90%;
+            border-radius: 18px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
         }
         .footer {
             background: linear-gradient(90deg, #FFD700 0%, #C1272D 100%);
